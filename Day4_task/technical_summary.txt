@@ -19,6 +19,165 @@ Negative quantity values were removed because they were invalid values for this 
 Negative unit prices were removed because a valid product price cannot be negative.
 
 The 4999.99 unit-price values were treated as extreme data-entry outliers. They were replaced with the median of the non-outlier unit prices. The median was selected because it is less affected by extreme values than the mean and therefore provides a more representative typical price.
+# Week 05 — Thursday Integration Assignment
+
+## Technical Summary
+
+### 1. Overview
+
+This project implements a complete **Exploratory Data Analysis (EDA) pipeline** on an orders dataset using **Pandas and Matplotlib**.
+
+The dataset contains information about:
+
+* Order IDs
+* Order dates
+* Customer IDs
+* Product categories
+* Order quantities
+* Unit prices
+* Regions
+
+The dataset was generated according to the required assignment specification and intentionally included multiple data-quality issues to simulate a realistic data-cleaning workflow.
+
+---
+
+### 2. Data Quality Diagnosis
+
+The dataset was diagnosed before making any changes using:
+
+* `head()`
+* `info()`
+* `describe()`
+* `isna().sum()`
+* `value_counts()`
+
+The diagnosis identified the following issues:
+
+1. Missing `customer_id` values
+2. Missing `region` values
+3. Inconsistent capitalization in product categories (`Electronics` / `electronics`)
+4. Negative `quantity` values
+5. Extreme `unit_price` values of `4999.99`
+6. Duplicate records
+7. Negative `unit_price` values
+
+These issues were investigated individually rather than applying a blanket cleaning operation.
+
+---
+
+### 3. Cleaning Decisions
+
+#### Missing `customer_id`
+
+Missing customer IDs were removed because `customer_id` is an identifier. Assigning an artificial ID would create information that was not present in the original data and could lead to incorrect customer-level analysis.
+
+#### Missing `region`
+
+Missing region values were replaced with `"Unknown"` because the orders themselves were still valid and useful for analysis. Removing these records would unnecessarily reduce the dataset.
+
+#### Inconsistent Product Categories
+
+The category labels were standardized so that `"Electronics"` and `"electronics"` were treated as the same product category.
+
+#### Negative Quantities
+
+Negative quantity values were removed because they were considered invalid for the required order-quantity analysis and were intentionally introduced as a data-quality issue.
+
+#### Negative Unit Prices
+
+Negative unit prices were removed because a valid product price cannot be negative.
+
+#### Extreme Unit-Price Outliers
+
+The `4999.99` unit-price values were identified as extreme data-entry outliers.
+
+Instead of removing these records, the outlier prices were replaced with the **median of the non-outlier unit prices**.
+
+**Why median?**
+
+The median was selected because it is less sensitive to extreme values than the mean. Since the dataset already contained unusually large prices, using the mean could pull the replacement value upward and make it less representative of a typical product price. The median therefore provides a more robust estimate of the central price.
+
+#### Duplicate Records
+
+Duplicate rows were removed to ensure that repeated records did not artificially increase order counts or distort the analysis.
+
+---
+
+### 4. Final Validation
+
+After cleaning, the dataset contained:
+
+**4,788 rows × 7 columns**
+
+Final validation confirmed that:
+
+* No missing values remained
+* No negative quantities remained
+* No negative unit prices remained
+* No `4999.99` outlier prices remained
+* No duplicate records remained
+
+The cleaned dataset was saved as:
+
+`cleaned_orders.csv`
+
+This allows the cleaned data to be reused for visualization and further analysis without repeating the cleaning process.
+
+---
+
+### 5. Key Findings
+
+* **Electronics** was the most represented product category with **1,922 records**, followed by **Home Goods (1,002)**, **Apparel (955)**, and **Books (909)**.
+* The unit-price distribution was concentrated mainly in the lower-to-middle price range, with a right-skewed pattern caused by relatively higher-priced observations.
+* After cleaning, order quantities ranged from **1 to 7 units**, with most orders containing a relatively small number of units.
+* The **unit price vs. quantity** scatter plot showed no strong linear relationship, suggesting that higher-priced products were not consistently ordered in larger or smaller quantities.
+* Regional visualizations showed broadly similar ordering patterns across regions. However, these observations should be interpreted cautiously because the dataset is synthetic.
+
+---
+
+### 6. Visualizations
+
+The analysis included the following visualizations:
+
+1. Unit Price Distribution
+2. Product Category Distribution
+3. Order Quantity Distribution
+4. Unit Price vs. Quantity
+5. Orders Over Time
+6. Orders by Region
+7. Unit Price by Category
+8. Average Unit Price by Region
+9. Order Quantity by Region
+10. Correlation Heatmap
+
+Each visualization was selected to answer a specific analytical question, including:
+
+* Understanding numerical distributions
+* Comparing product categories
+* Comparing regional patterns
+* Examining relationships between numerical variables
+* Inspecting trends over time
+* Exploring correlations between variables
+
+All charts were created using the required `fig, ax = plt.subplots()` approach and were labeled with appropriate titles and axis names.
+
+---
+
+### 7. Limitation
+
+The dataset is **synthetic** and was intentionally constructed with planted data-quality issues. Therefore, the observed patterns should not be interpreted as actual real-world business behavior.
+
+Another important limitation is that the dataset contains a unique order date for each generated row. As a result, the orders-over-time visualization should not be interpreted as reliable daily, weekly, or seasonal business trends.
+
+---
+
+### 8. Conclusion
+
+The EDA pipeline successfully **diagnosed, cleaned, validated, visualized, and summarized** the orders dataset.
+
+The project demonstrates an end-to-end data-analysis workflow using **Pandas and Matplotlib**, with each major cleaning decision justified according to the specific data-quality problem identified.
+
+The analysis also demonstrates the importance of validating data beyond missing values by checking for **duplicates, inconsistent categories, impossible values, and extreme outliers** before drawing conclusions from the data.
 
 Duplicate rows were removed so that repeated records would not be counted more than once.
 
