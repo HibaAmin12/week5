@@ -1,24 +1,3 @@
-Week 05 — Thursday Integration Assignment
-Technical Summary
-
-Overview
-This project performs a complete Exploratory Data Analysis (EDA) pipeline on an orders dataset. The dataset contains order IDs, order dates, customer IDs, product categories, quantities, unit prices, and regions. The dataset was generated according to the required assignment specification and intentionally contained several data-quality issues.
-
-Data Quality Issues Identified
-The initial diagnosis was performed using head(), info(), describe(), isna().sum(), and value_counts(). The analysis identified missing customer IDs, missing region values, inconsistent product-category capitalization, negative quantities, extreme unit-price values of 4999.99, and duplicate records.
-
-Cleaning Decisions
-Missing customer_id values were removed because customer_id is an identifier, and assigning an artificial customer ID could introduce incorrect information into the analysis.
-
-Missing region values were replaced with "Unknown" because the corresponding orders were still valid and useful. Removing these records would unnecessarily reduce the dataset.
-
-Product category labels were standardized so that "Electronics" and "electronics" were treated as the same category.
-
-Negative quantity values were removed because they were invalid values for this analysis and were intentionally introduced as data-quality issues.
-
-Negative unit prices were removed because a valid product price cannot be negative.
-
-The 4999.99 unit-price values were treated as extreme data-entry outliers. They were replaced with the median of the non-outlier unit prices. The median was selected because it is less affected by extreme values than the mean and therefore provides a more representative typical price.
 # Week 05 — Thursday Integration Assignment
 
 ## Technical Summary
@@ -178,44 +157,3 @@ The EDA pipeline successfully **diagnosed, cleaned, validated, visualized, and s
 The project demonstrates an end-to-end data-analysis workflow using **Pandas and Matplotlib**, with each major cleaning decision justified according to the specific data-quality problem identified.
 
 The analysis also demonstrates the importance of validating data beyond missing values by checking for **duplicates, inconsistent categories, impossible values, and extreme outliers** before drawing conclusions from the data.
-
-Duplicate rows were removed so that repeated records would not be counted more than once.
-
-Final Validation
-After cleaning, the dataset contained 4,788 rows and 7 columns. Final validation confirmed that there were no missing values, no negative quantities, no negative unit prices, no remaining 4999.99 unit-price outliers, and no duplicate rows.
-
-The cleaned dataset was saved as cleaned_orders.csv so that it can be reused for visualization and further analysis without repeating the cleaning process.
-
-Key Findings
-Electronics was the most represented product category with 1,922 records, followed by Home Goods with 1,002 records, Apparel with 955 records, and Books with 909 records.
-
-The unit-price distribution was mainly concentrated in the lower-to-middle price range, with a right-skewed distribution caused by relatively higher-priced observations.
-
-The order-quantity distribution showed that most orders contained a relatively small number of units, with quantities ranging from 1 to 7 after cleaning.
-
-The scatter plot of unit price versus quantity did not show a strong linear relationship. This suggests that higher-priced products were not consistently ordered in larger or smaller quantities in this dataset.
-
-The regional visualizations showed broadly similar ordering patterns across regions. These results should be interpreted carefully because the dataset is synthetic.
-
-Visualizations
-The visualization section included:
-- Unit price distribution
-- Product category distribution
-- Order quantity distribution
-- Unit price versus order quantity
-- Orders over time
-- Orders by region
-- Unit price by category
-- Average unit price by region
-- Order quantity by region
-- Correlation heatmap
-
-Each visualization was selected to answer a specific analytical question, such as understanding distributions, comparing categories or regions, and examining relationships between numerical variables.
-
-Limitation
-The dataset is synthetic and intentionally constructed with planted data-quality issues. Therefore, the observed patterns should not be interpreted as actual real-world business behavior.
-
-Another limitation is that the dataset contains a unique order date for each row after generation, so the orders-over-time visualization should not be interpreted as reliable daily or seasonal business trends.
-
-Conclusion
-The EDA pipeline successfully diagnosed, cleaned, validated, visualized, and summarized the orders dataset. The project demonstrates an end-to-end workflow using Pandas and Matplotlib, with each major cleaning decision justified according to the specific data-quality problem identified.
